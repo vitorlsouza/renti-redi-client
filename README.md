@@ -1,69 +1,144 @@
-# React + TypeScript + Vite
+## How to Run
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### Prerequisites
 
-Currently, two official plugins are available:
+- Node.js (v18 or higher)
+- pnpm package manager
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### Step-by-Step Instructions
 
-## Expanding the ESLint configuration
+1. **Clone and install dependencies**
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+   ```bash
+   pnpm install
+   ```
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+2. **Set up environment variables**
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+   ```bash
+   cp .env.example .env
+   # Edit .env file with your API URL
+   ```
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+3. **Start development server**
+
+   ```bash
+   pnpm dev
+   ```
+
+4. **Run tests**
+
+   ```bash
+   # Run tests in watch mode
+   pnpm test
+
+   # Run tests once
+   pnpm test:run
+
+   # Run tests with UI
+   pnpm test:ui
+   ```
+
+5. **Build for production**
+
+   ```bash
+   pnpm build
+   ```
+
+6. **Lint code**
+   ```bash
+   pnpm lint
+   ```
+
+## Approach
+
+This solution implements a modern React application with a focus on:
+
+- Type Safety
+- State Management
+- API Integration
+- Testing
+- Code Quality
+
+### Architecture
+
+```
+src/
+├── components/     # Reusable UI components
+├── contexts/       # React Context providers and reducers
+├── hooks/          # Custom React hooks
+├── lib/            # Utility functions and validations
+├── services/       # API service layer
+├── types/          # TypeScript type definitions
+└── test/           # Test setup and utilities
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Features Implemented
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+✅ **User Management**
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- Create new users with name and ZIP code
+- List all users with location data
+- Update existing users
+- Delete users
+- Select/view user details
+
+✅ **Form Validation**
+
+- Name validation (2-100 characters, letters only)
+- ZIP code validation (12345 or 12345-6789 format)
+- Zod schemas for type-safe validation
+
+✅ **State Management**
+
+- Centralized user state with Context API
+- Loading states and error handling
+- Optimistic updates for better UX
+
+✅ **API Integration**
+
+- RESTful API service layer
+- Request/response interceptors
+- Proper error handling and timeouts
+
+✅ **Testing Suite**
+
+- 33 comprehensive unit tests
+- Validation testing
+- API service mocking
+- Hook testing with React Testing Library
+- Context/reducer testing
+
+## Assumptions Made
+
+1. **API Structure**: Assumed RESTful API with standard CRUD endpoints (`/users`)
+2. **Error Handling**: API returns structured error responses with message field
+
+## Testing
+
+### Testing Strategy
+
+- **Unit Tests**: All business logic and utilities
+- **Integration Tests**: API service with mock adapter
+- **React Testing**: Hooks and context with React Testing Library
+- **Mock Strategy**: API calls mocked for predictable testing
+
+### Test Tools
+
+- **Vitest**: Fast test runner with TypeScript support
+- **React Testing Library**: Component and hook testing
+- **Axios Mock Adapter**: API request mocking
+- **Jest DOM**: Enhanced DOM testing matchers
+
+### Running Tests
+
+```bash
+# Watch mode (recommended for development)
+pnpm test
+
+# Single run (CI/CD)
+pnpm test:run
+
+# UI mode (visual test runner)
+pnpm test:ui
 ```
